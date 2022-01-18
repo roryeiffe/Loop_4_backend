@@ -1,0 +1,18 @@
+Back-end:
+
+Entities:
+	User:
+		int id primary key
+		string name
+		int total_score
+		int current_score
+		int vote_count
+	Room: 
+		int id primary key
+		String category
+		array[] User players
+		array[] questions
+	Question:
+		int id primary key
+		String question
+		String category
