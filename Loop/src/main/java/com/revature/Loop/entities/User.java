@@ -21,10 +21,13 @@ public class User {
     private int total_score;
     private int current_score;
     private int vote_count;
+    private boolean inLoop;
 
     public User(String name) {
         this.name = name;
         this.total_score = this.current_score = this.vote_count = 0;
+        System.out.println("Got here");
+        this.inLoop = true;
         return;
     }
 

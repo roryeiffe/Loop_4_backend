@@ -28,7 +28,6 @@ public class UserController {
 
     @PutMapping("/reset/{id}")
     public void resetUser(@PathVariable("id")Long id, @RequestBody boolean full) {
-        System.out.println(full);
         userService.resetUser(id, full);
     }
 

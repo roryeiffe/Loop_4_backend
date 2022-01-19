@@ -1,6 +1,7 @@
 package com.revature.Loop.services;
 
 import com.revature.Loop.entities.User;
+import com.revature.Loop.repositories.RoomRepository;
 import com.revature.Loop.repositories.UserRepository;
 import com.revature.Loop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    RoomRepository roomRepository;
+
     @Override
     public void addUser(User user) {
-        userRepository.save(user);
+        User newUser = new User(user.getName());
+        userRepository.save(newUser);
     }
 
     @Override
@@ -34,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersForRoom(Long id) {
-        return null;
+        return roomRepository.getById(id).getPlayers();
     }
 
     @Override
