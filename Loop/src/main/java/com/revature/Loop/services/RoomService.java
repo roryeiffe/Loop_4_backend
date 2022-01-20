@@ -9,5 +9,6 @@ public interface RoomService {
     public Room getRoom(Long id);
     public Room getRoomByPassword(String password);
     public Room updateRoom(Long id, Room room);
+    public Room initializeRoom(Long id);
     public void deleteRoom(Long id);
 }

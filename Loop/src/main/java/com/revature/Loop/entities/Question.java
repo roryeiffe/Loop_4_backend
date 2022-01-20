@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,4 +20,10 @@ public class Question {
     private String question;
     @ManyToMany
     private List<Room> rooms;
+
+    public Question(String cat, String question) {
+        this.category = cat;
+        this.question = question;
+        this.rooms = new ArrayList<>();
+    }
 }

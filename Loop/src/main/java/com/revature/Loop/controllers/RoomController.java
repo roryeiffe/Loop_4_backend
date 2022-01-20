@@ -32,9 +32,14 @@ public class RoomController {
         roomService.deleteRoom(id);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public Room updateRoom(@PathVariable("id") Long id, @RequestBody Room room) {
         return roomService.updateRoom(id, room);
+    }
+
+    @PutMapping("/init/{id}")
+    public Room initializeRoom(@PathVariable("id") Long id) {
+        return roomService.initializeRoom(id);
     }
 
 }

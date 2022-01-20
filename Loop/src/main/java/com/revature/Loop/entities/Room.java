@@ -20,16 +20,21 @@ public class Room {
     private String password;
     @OneToMany
     List<User> players;
+    String category;
     // questions that will be asked
     @ManyToMany
     List<Question> questions;
+    @ManyToMany
+    List<Answer> answers;
     // secret answer:
     String answer;
 
     public Room() {
         this.players = new ArrayList<>();
         this.questions = new ArrayList<>();
+        this.answers = new ArrayList<>();
         this.answer = "";
+        this.category = "food";
         // randomly generate password:
         Random generator = new Random();
         String password = "";
