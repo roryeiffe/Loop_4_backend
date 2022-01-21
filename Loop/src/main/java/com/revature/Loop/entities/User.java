@@ -26,7 +26,6 @@ public class User {
     public User(String name) {
         this.name = name;
         this.total_score = this.current_score = this.vote_count = 0;
-        System.out.println("Got here");
         this.inLoop = true;
         return;
     }

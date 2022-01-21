@@ -1,5 +1,6 @@
 package com.revature.Loop.controllers;
 
+import com.revature.Loop.dto.RoomUserIds;
 import com.revature.Loop.services.RoomService;
 import com.revature.Loop.entities.Room;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class RoomController {
     @PutMapping("/init/{id}")
     public Room initializeRoom(@PathVariable("id") Long id) {
         return roomService.initializeRoom(id);
+    }
+
+    @PutMapping("/addUser")
+    public Room addUser(@RequestBody RoomUserIds data) {
+        return roomService.addUser(data);
     }
 
 }
