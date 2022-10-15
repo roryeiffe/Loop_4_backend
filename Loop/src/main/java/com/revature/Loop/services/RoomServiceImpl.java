@@ -1,17 +1,16 @@
 package com.revature.Loop.services;
 
-import com.revature.Loop.dto.RoomUserIds;
+import com.revature.Loop.Exceptions.NotEnoughPlayersException;
 import com.revature.Loop.entities.Answer;
 import com.revature.Loop.entities.Question;
 import com.revature.Loop.entities.Room;
-import com.revature.Loop.entities.User;
+import com.revature.Loop.entities.Player;
 import com.revature.Loop.repositories.AnswerRepository;
 import com.revature.Loop.repositories.QuestionRepository;
 import com.revature.Loop.repositories.RoomRepository;
-import com.revature.Loop.repositories.UserRepository;
+import com.revature.Loop.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ import java.util.Random;
 public class RoomServiceImpl implements RoomService{
 
     @Autowired
-    UserRepository userRepository;
+    PlayerRepository playerRepository;
 
     @Autowired
     RoomRepository roomRepository;
@@ -35,6 +34,21 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public Room addRoom() {
         Room room = new Room();
+        roomRepository.save(room);
+        return room;
+    }
+
+    public Room addPlayer(Long roomId, Long playerId) {
+        Room room = roomRepository.findById(roomId).get();
+        Player player = playerRepository.findById(playerId).get();
+        List<Player> players = room.getPlayers();
+        // make sure this name is unique:
+        boolean found = false;
+        for(Player player_ : players) {
+            if (player_.getName().equals(player.getName())) found = true;
+        }
+        if(!found) players.add(player);
+        room.setPlayers(players);
         roomRepository.save(room);
         return room;
     }
@@ -62,26 +76,13 @@ public class RoomServiceImpl implements RoomService{
         return room;
     }
 
-    @Override
-    public Room addUser(RoomUserIds data) {
-        Room room = roomRepository.findById(data.getRoomId()).get();
-        User user = userRepository.findById(data.getUserId()).get();
-        List<User> users = room.getPlayers();
-        // make sure this name is unique:
-        boolean found = true;
-        for(User user_: users) {
-            if (user_.getName().equals(user.getName())) found = true;
-        }
-        if(!found) users.add(user);
-        room.setPlayers(users);
-        roomRepository.save(room);
-        return room;
-    }
 
     @Override
-    public Room initializeRoom(Long id) {
+    public Room initializeRoom(Long id) throws NotEnoughPlayersException{
         Room room = roomRepository.findById(id).get();
-        // TODO: make this the number of players in the lobby:
+        if(room.getPlayers().size() < 3) {
+            throw new NotEnoughPlayersException();
+        }
         int numQuestions = room.getPlayers().size();
         String category = room.getCategory();
         // generate the random questions:

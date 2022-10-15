@@ -2,7 +2,6 @@ package com.revature.Loop.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,13 +17,22 @@ public class Room {
     private Long id;
     @Column(unique = true)
     private String password;
-    @OneToMany
-    List<User> players;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    List<Player> players;
     String category;
     // questions that will be asked
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "room_questions",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     List<Question> questions;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "room_answers",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "answer_id"))
     List<Answer> answers;
     // secret answer:
     String answer;

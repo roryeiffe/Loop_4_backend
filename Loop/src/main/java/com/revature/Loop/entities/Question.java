@@ -17,13 +17,11 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String category;
+    @Column(unique = true)
     private String question;
-    @ManyToMany
-    private List<Room> rooms;
 
     public Question(String cat, String question) {
         this.category = cat;
         this.question = question;
-        this.rooms = new ArrayList<>();
     }
 }

@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    @Query(value = "SELECT * FROM answer where category = ?1 ORDER BY RAND() LIMIT ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM answer where category = ?1 ORDER BY RANDOM() LIMIT ?2", nativeQuery = true)
     List<Answer> getRandomAnswers(String category, int numAnswers);
 }

@@ -4,16 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class User {
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,7 +19,7 @@ public class User {
     private int vote_count;
     private boolean inLoop;
 
-    public User(String name) {
+    public Player() {
         this.name = name;
         this.total_score = this.current_score = this.vote_count = 0;
         this.inLoop = true;
